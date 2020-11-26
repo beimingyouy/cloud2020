@@ -27,7 +27,7 @@ public class HiveConfig {
     private static Integer hiveMaxWait = 60000;
 
 
-    @Bean
+    @Bean("hiveDruidDataSource")
     public  DruidDataSource getHiveDataSource() throws Exception {
         if (hiveDataSource.isInited()) {
             return hiveDataSource;
