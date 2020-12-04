@@ -11,6 +11,7 @@
         <module>cloud-base</module>
         <module>cloud-provider-payment8001</module>
         <module>hive</module>
+        <module>learn-eureka</module>
     </modules>
     <packaging>pom</packaging>
     <name>cloud2020</name>
