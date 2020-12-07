@@ -18,7 +18,7 @@ public class HiveConfig {
 
     private static DruidDataSource hiveDataSource = new DruidDataSource();
 
-    private static String hiveUrl = "jdbc:hive2://localhost:10000/hive_1";
+    private static String hiveUrl = "jdbc:hive2://10.73.153.26:10000";
     private static String hiveJdbcUserName = "root";
     private static String hiveJdbcPassword = "root";
     private static Integer hiveInitialSize = 20;

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: zy
@@ -29,21 +31,23 @@ public class HiveController {
 
     @RequestMapping("/test")
     @ResponseBody
-    public String test() throws Exception {
+    public List<Object> test() throws Exception {
 
         Connection conn = druidDataSource.getConnection();
         Statement stmt = null;
+        List<Object> list = new ArrayList<>();
         if (conn == null) {
             //error
         } else {
             stmt = conn.createStatement();
-            ResultSet res = stmt.executeQuery("select * from hive_01 ");
+            ResultSet res = stmt.executeQuery("select * from accounting.user_bean_price limit 100 ");
+
             while (res.next()) {
-                log.info(res.getString(1) + "|" + res.getString(2));
+
             }
         }
         stmt.close();
         HiveConfig.closeConn(conn);
-        return "test";
+        return list;
     }
 }
