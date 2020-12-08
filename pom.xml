@@ -13,6 +13,7 @@
         <module>hive</module>
         <module>learn-eureka</module>
         <module>learn-user-service</module>
+        <module>learn-ribbon-service</module>
     </modules>
     <packaging>pom</packaging>
     <name>cloud2020</name>

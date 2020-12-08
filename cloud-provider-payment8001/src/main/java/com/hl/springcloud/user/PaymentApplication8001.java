@@ -1,4 +1,4 @@
-package com.hl.springcloud;
+package com.hl.springcloud.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

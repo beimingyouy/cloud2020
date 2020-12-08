@@ -40,10 +40,10 @@ public class HiveController {
             //error
         } else {
             stmt = conn.createStatement();
-            ResultSet res = stmt.executeQuery("select * from accounting.user_bean_price limit 100 ");
+            ResultSet res = stmt.executeQuery("select year,month,account_uuid from accounting.user_bean_price where year = 2020 limit 10 ");
 
             while (res.next()) {
-
+                log.info(res.getString(1) + " | "+res.getString(2) + " | "+res.getString(3) + " | ");
             }
         }
         stmt.close();

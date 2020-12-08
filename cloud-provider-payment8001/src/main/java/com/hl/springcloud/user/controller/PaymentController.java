@@ -1,8 +1,8 @@
-package com.hl.springcloud.controller;
+package com.hl.springcloud.user.controller;
 
-import com.hl.springcloud.entity.CommonResult;
-import com.hl.springcloud.entity.Payment;
-import com.hl.springcloud.service.PaymentService;
+import com.hl.springcloud.user.entity.CommonResult;
+import com.hl.springcloud.user.service.PaymentService;
+import com.hl.springcloud.user.entity.Payment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

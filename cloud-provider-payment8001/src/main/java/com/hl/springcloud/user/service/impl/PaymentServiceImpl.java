@@ -1,12 +1,10 @@
-package com.hl.springcloud.service.impl;
+package com.hl.springcloud.user.service.impl;
 
-import com.hl.springcloud.dao.PaymentDao;
-import com.hl.springcloud.entity.Payment;
-import com.hl.springcloud.service.PaymentService;
+import com.hl.springcloud.user.dao.PaymentDao;
+import com.hl.springcloud.user.service.PaymentService;
+import com.hl.springcloud.user.entity.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @Author: zy

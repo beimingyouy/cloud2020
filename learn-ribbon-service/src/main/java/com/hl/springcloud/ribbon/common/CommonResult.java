@@ -1,6 +1,5 @@
-package com.hl.springcloud.common;
+package com.hl.springcloud.ribbon.common;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

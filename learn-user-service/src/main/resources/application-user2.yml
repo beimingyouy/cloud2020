@@ -1,0 +1,11 @@
+server:
+  port: 9102
+spring:
+  application:
+    name: user-service
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://replica1:9001/eureka/,http://replica2:9002/eureka/ #同时注册到两个注册中心

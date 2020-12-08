@@ -1,6 +1,6 @@
-package com.hl.springcloud.service;
+package com.hl.springcloud.user.service;
 
-import com.hl.springcloud.entity.Payment;
+import com.hl.springcloud.user.entity.Payment;
 import org.apache.ibatis.annotations.Param;
 
 /**
