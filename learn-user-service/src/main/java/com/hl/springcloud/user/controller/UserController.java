@@ -23,6 +23,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public CommonResult<User> getUser(@PathVariable Long id) {
+        log.info("id={}", id);
         return new CommonResult(200, "操作成功");
     }
 

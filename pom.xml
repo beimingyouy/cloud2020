@@ -14,6 +14,8 @@
         <module>learn-eureka</module>
         <module>learn-user-service</module>
         <module>learn-ribbon-service</module>
+        <module>learn-hystrix-service</module>
+        <module>cloud-core</module>
     </modules>
     <packaging>pom</packaging>
     <name>cloud2020</name>
@@ -106,6 +108,14 @@
 
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
