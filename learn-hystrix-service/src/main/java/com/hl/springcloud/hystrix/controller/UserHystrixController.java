@@ -25,4 +25,27 @@ public class UserHystrixController {
     }
 
 
+    @GetMapping("/testException/{id}")
+    public CommonResult testException(@PathVariable Long id) {
+        return userHystrixService.getUserException(id);
+    }
+
+
+    @GetMapping("/testCache/{id}")
+    public CommonResult testCache(@PathVariable Long id) {
+        userHystrixService.getUserCache(id);
+        userHystrixService.getUserCache(id);
+        userHystrixService.getUserCache(id);
+        return new CommonResult(200, "testCache");
+    }
+
+    @GetMapping("/testRemoveCache/{id}")
+    public CommonResult testRemoveCache(@PathVariable Long id) {
+        userHystrixService.getUserCache(id);
+        userHystrixService.removeCache(id);
+        userHystrixService.getUserCache(id);
+        return new CommonResult(200, "testRemoveCache");
+    }
+
+
 }
