@@ -1,12 +1,16 @@
 package com.hl.springcloud.hystrix.controller;
 
 import com.hl.springcloud.core.common.CommonResult;
+import com.hl.springcloud.core.entity.User;
 import com.hl.springcloud.hystrix.service.UserHystrixService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @Author: zy
@@ -46,6 +50,19 @@ public class UserHystrixController {
         userHystrixService.getUserCache(id);
         return new CommonResult(200, "testRemoveCache");
     }
+
+    @GetMapping("/testCollapser")
+    public CommonResult testCollapser() throws ExecutionException, InterruptedException {
+        Future<User> future1 = userHystrixService.getUserFuture(1L);
+        Future<User> future2 = userHystrixService.getUserFuture(2L);
+        future1.get();
+        future2.get();
+//        ThreadUtil.safeSleep(200);
+        Future<User> future3 = userHystrixService.getUserFuture(3L);
+        future3.get();
+        return new CommonResult(200, "testCollapser");
+    }
+
 
 
 }

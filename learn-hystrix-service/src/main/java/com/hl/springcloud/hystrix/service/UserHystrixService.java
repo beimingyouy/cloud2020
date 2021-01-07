@@ -1,16 +1,25 @@
 package com.hl.springcloud.hystrix.service;
 
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.hl.springcloud.core.common.CommonResult;
 import com.hl.springcloud.core.entity.User;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCollapser;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
+import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * @Author: zy
@@ -99,6 +108,28 @@ public class UserHystrixService {
     public CommonResult removeCache(Long id) {
         log.info("removeCache id:{}", id);
         return restTemplate.postForObject(userServiceUrl + "/user/delete/{1}", null, CommonResult.class, id);
+    }
+
+
+    @HystrixCollapser(batchMethod = "getUserByIds", collapserProperties = {
+            @HystrixProperty(name = "timerDelayInMilliseconds", value = "100")
+    })
+    public Future<User> getUserFuture(Long id) {
+        return new AsyncResult<User>() {
+            @Override
+            public User invoke() {
+                CommonResult commonResult = restTemplate.getForObject(userServiceUrl + "/user/{1}", CommonResult.class, id);
+                Map data = (Map) commonResult.getData();
+                User user = new User(id, "name" + id);
+                return user;
+            }
+        };
+    }
+
+    @HystrixCommand
+    public List<User> getUserByIds(List<Long> ids) {
+        CommonResult commonResult = restTemplate.getForObject(userServiceUrl + "/user/getUserByIds?ids={1}", CommonResult.class, ids);
+        return null;
     }
 
 
