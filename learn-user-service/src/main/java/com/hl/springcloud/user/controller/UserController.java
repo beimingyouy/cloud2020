@@ -5,6 +5,8 @@ import com.hl.springcloud.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,8 +33,14 @@ public class UserController {
 
     @GetMapping("/getUserByIds")
     public CommonResult<User> getUserByIds(@RequestParam List<Long> ids) {
-        log.info("id={}", ids);
-        return new CommonResult(200, "操作成功getUserByIds");
+        log.info("ids={}", ids);
+        List<User> userList = new ArrayList<>();
+
+        for (Long id : ids) {
+            User user = new User(id, "name" + id);
+            userList.add(user);
+        }
+        return new CommonResult(200, "操作成功getUserByIds", userList);
     }
 
     @PostMapping("/delete/{id}")

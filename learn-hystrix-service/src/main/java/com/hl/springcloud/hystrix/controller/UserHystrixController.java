@@ -1,5 +1,6 @@
 package com.hl.springcloud.hystrix.controller;
 
+import cn.hutool.core.thread.ThreadUtil;
 import com.hl.springcloud.core.common.CommonResult;
 import com.hl.springcloud.core.entity.User;
 import com.hl.springcloud.hystrix.service.UserHystrixService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -55,14 +57,13 @@ public class UserHystrixController {
     public CommonResult testCollapser() throws ExecutionException, InterruptedException {
         Future<User> future1 = userHystrixService.getUserFuture(1L);
         Future<User> future2 = userHystrixService.getUserFuture(2L);
-        future1.get();
-        future2.get();
-//        ThreadUtil.safeSleep(200);
+        Object o1 = future1.get();
+        Object o2 = future2.get();
+        ThreadUtil.safeSleep(200);
         Future<User> future3 = userHystrixService.getUserFuture(3L);
-        future3.get();
-        return new CommonResult(200, "testCollapser");
+        Object o3 = future3.get();
+        return new CommonResult(200, "testCollapser", Arrays.asList(o1, o2, o3));
     }
-
 
 
 }

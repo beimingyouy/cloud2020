@@ -1,6 +1,7 @@
 package com.hl.springcloud.hystrix.service;
 
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.hl.springcloud.core.common.CommonResult;
 import com.hl.springcloud.core.entity.User;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCollapser;
@@ -17,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -111,25 +113,31 @@ public class UserHystrixService {
     }
 
 
+    /**
+     * batchMethod：用于设置请求合并的方法；
+     * collapserProperties：请求合并属性，用于控制实例属性，有很多；
+     * timerDelayInMilliseconds：collapserProperties中的属性，用于控制每隔多少时间合并一次请求；
+     *
+     * @param id
+     * @return
+     */
     @HystrixCollapser(batchMethod = "getUserByIds", collapserProperties = {
-            @HystrixProperty(name = "timerDelayInMilliseconds", value = "100")
+            @HystrixProperty(name = "timerDelayInMilliseconds", value = "1")
     })
     public Future<User> getUserFuture(Long id) {
         return new AsyncResult<User>() {
             @Override
             public User invoke() {
                 CommonResult commonResult = restTemplate.getForObject(userServiceUrl + "/user/{1}", CommonResult.class, id);
-                Map data = (Map) commonResult.getData();
-                User user = new User(id, "name" + id);
-                return user;
+                return (User) commonResult.getData();
             }
         };
     }
 
     @HystrixCommand
     public List<User> getUserByIds(List<Long> ids) {
-        CommonResult commonResult = restTemplate.getForObject(userServiceUrl + "/user/getUserByIds?ids={1}", CommonResult.class, ids);
-        return null;
+        CommonResult commonResult = restTemplate.getForObject(userServiceUrl + "/user/getUserByIds?ids={1}", CommonResult.class, CollUtil.join(ids, ","));
+        return (List<User>) commonResult.getData();
     }
 
 
