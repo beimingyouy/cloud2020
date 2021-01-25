@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
@@ -54,7 +53,7 @@ public class UserHystrixController {
     }
 
     @GetMapping("/testCollapser")
-    public CommonResult testCollapser() throws ExecutionException, InterruptedException {
+    public CommonResult testCollapser() throws Exception {
         Future<User> future1 = userHystrixService.getUserFuture(1L);
         Future<User> future2 = userHystrixService.getUserFuture(2L);
         Object o1 = future1.get();

@@ -1,6 +1,5 @@
 package com.hl.springcloud.hystrix.service;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.hl.springcloud.core.common.CommonResult;
 import com.hl.springcloud.core.entity.User;
@@ -14,13 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
